@@ -1,0 +1,10 @@
+# python compile files
+*.py[cod]
+
+# linux temp files
+*~
+
+# MAC folder files
+.DS_Store
+._.DS_Store
+._*
