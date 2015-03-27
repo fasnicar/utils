@@ -22,12 +22,11 @@ def read_params():
     Parse the input parameters, performing some validity check.
     Return the parsed arguments.
     """
-    parser = ArgumentParser(description="aln_stats.py (ver. "+__version__+" of "+__date__+"). Authors: "+__author__+" ("
+    parser = ArgumentParser(description="aln_stats.py (ver. "+__version__+" of "+__date__+"). Author: "+__author__+" ("
         +__email__+")")
 
-    parser.add_argument('total_alignment', nargs='?', type=str, help="The total (final) "
-        "alignment file produced by PhyloPhlan. A thorough set of statical data will be provided.", metavar='TOTALN')
-
+    parser.add_argument('total_alignment', nargs='?', type=str, help="The total (final) alignment file produced by "
+        "PhyloPhlan. A thorough set of statical data will be provided.", metavar='TOTALN')
 
     # name or flags
     # action - The basic type of action to be taken when this argument is encountered at the command line.
@@ -70,7 +69,6 @@ def main(args):
             print alignment.id, "len:", len_aln, "gaps:", gaps, "aln:", len_aln-gaps
 
         print "total alignments:", i
-
 
     return utils.SUCCESS
 
