@@ -41,6 +41,10 @@ def read_params():
     args = parser.parse_args()
 
     # Additional checks for input params
+    if not args.b6o_folder:
+        args.b6o_folder = './'
+        if args.verbose: utils.info('no b6o_folder provided, current directory will be used.')
+
     if not args.b6o_folder.endswith('/'):
         args.b6o_folder = args.b6o_folder+'/'
         if args.verbose: utils.info('added "/" to b6o_folder: "'+args.b6o_folder+'"')
