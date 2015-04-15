@@ -24,7 +24,8 @@ def read_params():
         " ("+__email__+")")
 
     parser.add_argument('b6o_folder', nargs='?', type=str, help="", metavar='B6O_FOLDER')
-    parser.add_argument('-v', '--verbose', action='store_true', help="aa")
+    parser.add_argument('-e', '--extension', default='.b6o', type=str, help="")
+    parser.add_argument('-v', '--verbose', action='store_true', help="")
 
     # name or flags
     # action - The basic type of action to be taken when this argument is encountered at the command line.
@@ -49,6 +50,10 @@ def read_params():
         args.b6o_folder = args.b6o_folder+'/'
         if args.verbose: utils.info('added "/" to b6o_folder: "'+args.b6o_folder+'"')
 
+    if not args.extension.startswith('.'):
+        args.extension = '.'+args.extension
+        if args.verbose: utils.info('added "." to extension: "'+args.extension+'"')
+
 
     return args
 
@@ -57,12 +62,23 @@ def main(args):
     """
     """
     if not os.path.isdir(args.b6o_folder):
-        utils.error('directory not found: "'+str(args.total_alignment)+'"')
+        utils.error('directory not found: "'+str(args.b6o_folder)+'"')
         return utils.FOLDER_NOT_FOUND
 
-    b6o_files = iglob(args.b6o_folder+'*')
+    b6o_files = iglob(args.b6o_folder+'*'+args.extension)
+    b6o_results = {}
+
     for f in b6o_files:
-        print f
+        key = f[f.rfind('/')+1:]
+
+        with open(f) as hf:
+            for r in hf:
+                if key not in b6o_results:
+                    b6o_results[key] = [r.strip().split()]
+                else:
+                    b6o_results[key].append(r.strip().split())
+
+
 
     return utils.SUCCESS
 
@@ -71,5 +87,5 @@ if __name__ == "__main__":
     t0 = time()
     args = read_params()
     status = main(args)
-    utils.info('total time: '+str(int(time()-t0))+'s')
+    if args.verbose: utils.info('total time: '+str(int(time()-t0))+'s')
     sys.exit(status)
