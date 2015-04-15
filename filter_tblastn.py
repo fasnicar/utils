@@ -4,9 +4,10 @@
 import os
 import sys
 import utils
-from glob import iglob
 from time import time
+from glob import iglob
 from argparse import ArgumentParser
+from scipy.cluster import hierarchy
 
 
 __date__ = '15 Apr 2015'
@@ -66,19 +67,42 @@ def main(args):
         return utils.FOLDER_NOT_FOUND
 
     b6o_files = iglob(args.b6o_folder+'*'+args.extension)
-    b6o_results = {}
+    contigs = {}
 
     for f in b6o_files:
         key = f[f.rfind('/')+1:]
 
         with open(f) as hf:
             for r in hf:
-                if key not in b6o_results:
-                    b6o_results[key] = [r.strip().split()]
+                tmp_lst = r.strip().split()
+                dic = {} if key not in contigs else contigs[key]
+
+                tmp_tmp_lst = [tmp_lst[0]]
+                tmp_tmp_lst.append(float(tmp_lst[2]))
+                tmp_tmp_lst += [int(e) for e in tmp_lst[3:10]]
+                tmp_tmp_lst.append(float(tmp_lst[10]))
+                tmp_tmp_lst.append(float(tmp_lst[11]))
+
+                if tmp_lst[1] in dic:
+                    dic[tmp_lst[1]].append(tmp_tmp_lst)
                 else:
-                    b6o_results[key].append(r.strip().split())
+                    dic[tmp_lst[1]] = [tmp_tmp_lst]
 
+                contigs[key] = dic
 
+    for f, cc in contigs.items():
+        for c, d in cc.items():
+            points = [[dd[7]] for dd in d]
+            points += [[dd[8]] for dd in d]
+
+            # cluster start and end points
+            y = hierarchy.linkage(points)
+            z = hierarchy.median(y)
+
+            print len(points)
+            print z[:20]
+            break
+        break
 
     return utils.SUCCESS
 
