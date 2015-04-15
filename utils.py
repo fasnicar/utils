@@ -5,7 +5,9 @@ import sys
 SUCCESS = 0
 INVALID_ARGS = 1
 FILE_NOT_FOUND = 2
+FOLDER_NOT_FOUND = 3
 # #### ###### ###### #
+
 
 # printing functions #
 def info(s, init_new_line=False):
