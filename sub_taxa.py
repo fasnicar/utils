@@ -1,5 +1,9 @@
+#!/usr/bin/env python
+
+
 from sys import argv
 from subprocess import call
+
 
 tree = argv[1]
 taxa = argv[2]
@@ -16,4 +20,3 @@ with open(taxa, 'r') as f:
 
 for gid, taf in taxad.iteritems():
     call(['sed', '-i', 's/'+gid+'/'+gid+'_'+taf+'/g', tree])
-
