@@ -3,7 +3,6 @@
 
 import os
 import sys
-
 import utils
 import hashlib
 from time import time
@@ -13,10 +12,6 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from argparse import ArgumentParser
 from bz2 import BZ2File
-# from scipy.cluster import hierarchy
-# import matplotlib
-# matplotlib.use('PS')
-# import matplotlib.pyplot as plt
 
 
 __date__ = '15 Apr 2015'
@@ -219,16 +214,35 @@ def main(args):
                                 s, e = e, s
                                 reverse = True
 
-                            sequence = Seq(str(record.seq)[s-1:e])
+                            sequence1 = Seq(str(record.seq)[s:e])
+                            sequence2 = Seq(str(record.seq)[s-1:e])
+                            sequence3 = Seq(str(record.seq)[s-2:e])
 
-                            while (len(sequence) % 3) != 0: # if sequence no div by 3, add Ns
-                                sequence += Seq('N')
+                            # if sequence no div by 3, add Ns
+                            while (len(sequence1) % 3) != 0: sequence1 += Seq('N')
+                            while (len(sequence2) % 3) != 0: sequence2 += Seq('N')
+                            while (len(sequence3) % 3) != 0: sequence3 += Seq('N')
 
-                            if reverse: sequence = sequence.reverse_complement()
+                            # if reverse: sequence = sequence.reverse_complement()
+                            if reverse:
+                                sequence1 = sequence1.reverse_complement()
+                                sequence2 = sequence2.reverse_complement()
+                                sequence3 = sequence3.reverse_complement()
+
                             rev = ':c' if reverse else ':' # reverse or not
-                            seqid = f+'_'+record.id+rev+str(s)+'-'+str(e)
-                            aminoacids = Seq.translate(sequence)
-                            proteome.append(SeqRecord(aminoacids, id=seqid, description=''))
+
+                            seqid1 = f+'_'+record.id+rev+str(s)+'-'+str(e)
+                            seqid2 = f+'_'+record.id+rev+str(s-1)+'-'+str(e)
+                            seqid3 = f+'_'+record.id+rev+str(s-2)+'-'+str(e)
+
+                            aminoacids1 = Seq.translate(sequence1)
+                            aminoacids2 = Seq.translate(sequence2)
+                            aminoacids3 = Seq.translate(sequence3)
+
+                            # proteome.append(SeqRecord(aminoacids, id=seqid, description=''))
+                            proteome.append(SeqRecord(aminoacids1, id=seqid1, description=''))
+                            proteome.append(SeqRecord(aminoacids2, id=seqid2, description=''))
+                            proteome.append(SeqRecord(aminoacids3, id=seqid3, description=''))
 
             ff.close()
 
@@ -238,7 +252,7 @@ def main(args):
                 hash = hashlib.sha1()
                 hash.update(str(time()))
                 f += str(hash.hexdigest()[:4])
-                utils.info('file already exists: '+fold+', written output file: '+f)
+                utils.info('file already exists: '+fold+', output file will be: '+f)
 
             # write output file
             with open(args.output+f+'.faa', 'w') as ff:
