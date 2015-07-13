@@ -249,9 +249,9 @@ def main(args):
             # make sure that the output file does not exists
             if os.path.isfile(args.output+f+'.faa'):
                 fold = str(f)
-                hash = hashlib.sha1()
-                hash.update(str(time()))
-                f += str(hash.hexdigest()[:4])
+                hashh = hashlib.sha1()
+                hashh.update(str(time()))
+                f += str(hashh.hexdigest()[:4])
                 utils.info('file already exists: '+fold+', output file will be: '+f)
 
             # write output file
