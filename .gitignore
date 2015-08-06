@@ -1,6 +1,9 @@
 # python compile files
 *.py[cod]
 
+# temp folder
+temp/
+
 # linux temp files
 *~
 
