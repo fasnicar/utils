@@ -1,6 +1,12 @@
 import sys
 
 
+__date__ = '26 May 2015'
+__email__ = 'f.asnicar@unitn.it'
+__author__ = 'Francesco Asnicar'
+__version__ = '0.01'
+
+
 # exit status values #
 SUCCESS = 0
 INVALID_ARGS = 1

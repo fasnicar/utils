@@ -4,10 +4,8 @@
 import os
 import sys
 import utils
-from time import time
 from Bio import SeqIO
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
+from time import time
 from argparse import ArgumentParser
 
 
@@ -66,9 +64,9 @@ def main(args):
             i += 1
             len_aln = len(alignment.seq)
             gaps = alignment.seq.count('-')
-            print alignment.id, "len:", len_aln, "gaps:", gaps, "aln:", len_aln-gaps
+            utils.info(str(alignment.id)+" len: "+str(len_aln)+" gaps: "+str(gaps)+" aln: "+str(len_aln-gaps), init_new_line=True)
 
-        print "total alignments:", i
+        utils.info("total alignments:"+str(i), init_new_line=True)
 
     return utils.SUCCESS
 

@@ -10,7 +10,7 @@ with open(sys.argv[1]) as f:
             if float(lst[-1]) < 0.0:
                 print '\t'.join(lst[:-1] + ['0.0'])
                 continue
-            
+
             if float(lst[-1]) > 1.0:
                 print '\t'.join(lst[:-1] + ['1.0'])
                 continue
