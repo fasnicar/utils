@@ -40,7 +40,7 @@ fig = plt.figure()
 # for i, md_lbl in zip(md.pos.values(), md.names):
 #     plt.scatter(X_r[md.pos == i, 0], X_r[md.pos == i, 1], c=colors[i], label=md_lbl)
 
-plt.scatter([x for x, _ in X_r], [y for _, y in X_r], c='r', label='a')
+plt.scatter([x for x, _ in X_r], [y for _, y in X_r], c='r', label='pca')
 
 plt.legend()
 plt.title('PCA')
