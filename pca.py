@@ -5,6 +5,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
+from sklearn.lda import LDA
 from sys import argv
 import pandas as pd
 import numpy as np
