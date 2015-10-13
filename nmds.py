@@ -14,9 +14,15 @@ import seaborn as sns
 
 # load data
 df = pd.read_table(argv[1], header=0, skiprows=[1, 2, 3, 4], index_col=0)
+df = df.transpose()
 df = df.as_matrix() # convert pandas.DataFrame to numpy.ndarray
 
 similarities = euclidean_distances(df)
+
+# metadata
+y = np.array([0, 0, 0, 0, 0, 0, 0, 0,
+              1, 1, 1, 1, 1, 1, 1, 1,
+              2, 2, 2, 2, 2, 2, 2])
 
 ########
 # NMDS #
@@ -33,7 +39,9 @@ npos = clf.fit_transform(npos)
 
 fig = plt.figure()
 
-plt.scatter(npos[:, 0], npos[:, 1], c='r', label='nmds')
+for col, lbl, idx in zip(['r', 'g', 'b'], ['fei', 'fem', 'mim'], [0, 1, 2]):
+    plt.scatter(npos[y == idx, 0], npos[y == idx, 1], c=col, label=lbl)
+# plt.scatter(npos[:, 0], npos[:, 1], c='r', label='nmds')
 
 plt.legend()
 plt.title('NMDS')
