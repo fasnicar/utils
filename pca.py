@@ -51,4 +51,4 @@ for col, lbl, idx in zip(['r', 'g', 'b'], ['fei', 'fem', 'mim'], [0, 1, 2]):
 plt.legend()
 plt.title('PCA')
 
-fig.savefig("temp/pca.png", dpi=300)
+fig.savefig("temp/pca_2.png", dpi=300)
