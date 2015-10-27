@@ -6,13 +6,15 @@ from sys import argv
 
 try:
     tsv = str(argv[1])
-    cols = [int(i) for i in argv[2].split(',')]
-    rows = [int(i) for i in argv[3].split(',')]
-    outf = str(argv[4])
+    skip_rows = [int(i) for i in argv[2].split(',')]
+    mums = [int(i) for i in argv[3].split(',')]
+    babies = [int(i) for i in argv[4].split(',')]
+    outf = str(argv[5])
 except:
-    print "py shared_bugs.py <tsv-mp2-merge> <col1,col2,..> <row1,row2,..> <output-name>"
-    print "py shared_bugs.py all.txt 3,6 all.png"
-    print "cols and rows indexes start from 1!"
+    print "py shared_bugs.py <tsv-mp2-merge> <1,2,..> <mum1,mum2,..> <baby1,baby2,..> <output-name>"
+    print "py shared_bugs.py all.txt 1 3,6 all.png"
+    print "    skip_rows index start from 1, do not include the header!"
+    print "    mums and babies indexes start from 1 and represent the couples of mum-baby!"
     exit(1)
 
 labels = []
@@ -21,20 +23,17 @@ header = True
 row_count = 1
 sep = ',' if tsv.endswith('.csv') else '\t'
 
+couples = [(m, b) for b, m in zip(mums, babies)]
+
 with open(tsv) as f:
     for r in f:
-        if row_count not in rows:
+        if row_count not in skip_rows:
             if header:
                 header = False
-
-                for c in cols:
-                    labels.append(r.strip().split(sep)[c-1])
+                labels = r.strip().split(sep)
             else:
                 bug = str(r.strip().split(sep)[0])
-                bugs_list[bug] = []
-
-                for c in cols:
-                    bugs_list[bug].append(float(r.strip().split(sep)[c-1]))
+                bugs_list[bug] = [float(s) for s in r.strip().split(sep)[1:]]
 
         row_count += 1
 
