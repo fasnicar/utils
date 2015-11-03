@@ -95,8 +95,8 @@ for col, lbl, idx in zip(['g', 'r', 'b'], ['fei', 'fem', 'mim'], [0, 1, 2]):
 plt.legend()
 plt.title('MDS')
 
-fig.savefig('temp/mds_'+output_filename+'.svg')
-fig.savefig('temp/mds_'+output_filename+'.png', dpi=300)
+fig.savefig('mds_'+output_filename+'.svg')
+fig.savefig('mds_'+output_filename+'.png', dpi=300)
 
 # draw NMDS
 fig = plt.figure()
@@ -108,5 +108,5 @@ for col, lbl, idx in zip(['g', 'r', 'b'], ['fei', 'fem', 'mim'], [0, 1, 2]):
 plt.legend()
 plt.title('NMDS')
 
-fig.savefig('temp/nmds_'+output_filename+'.svg')
-fig.savefig('temp/nmds_'+output_filename+'.png', dpi=300)
+fig.savefig('nmds_'+output_filename+'.svg')
+fig.savefig('nmds_'+output_filename+'.png', dpi=300)
