@@ -88,23 +88,25 @@ npos = clf.fit_transform(npos)
 # draw MDS
 fig = plt.figure()
 
-for col, lbl, idx in zip(['r', 'g', 'b'], ['fei', 'fem', 'mim'], [0, 1, 2]):
+for col, lbl, idx in zip(['g', 'r', 'b'], ['fei', 'fem', 'mim'], [0, 1, 2]):
 # for col, lbl, idx in zip(['r', 'g', 'b'], ['mom', 'chil', 'dad'], [0, 1, 2]):  # test.txt
     plt.scatter(pos[y == idx, 0], pos[y == idx, 1], c=col, label=lbl)
 
 plt.legend()
 plt.title('MDS')
 
-fig.savefig('temp/mds_'+output_filename+'.svg', dpi=300)
+fig.savefig('temp/mds_'+output_filename+'.svg')
+fig.savefig('temp/mds_'+output_filename+'.png', dpi=300)
 
 # draw NMDS
 fig = plt.figure()
 
-for col, lbl, idx in zip(['r', 'g', 'b'], ['fei', 'fem', 'mim'], [0, 1, 2]):
+for col, lbl, idx in zip(['g', 'r', 'b'], ['fei', 'fem', 'mim'], [0, 1, 2]):
 # for col, lbl, idx in zip(['r', 'g', 'b'], ['mom', 'chil', 'dad'], [0, 1, 2]):  # test.txt
     plt.scatter(npos[y == idx, 0], npos[y == idx, 1], c=col, label=lbl)
 
 plt.legend()
 plt.title('NMDS')
 
-fig.savefig('temp/nmds_'+output_filename+'.svg', dpi=300)
+fig.savefig('temp/nmds_'+output_filename+'.svg')
+fig.savefig('temp/nmds_'+output_filename+'.png', dpi=300)
