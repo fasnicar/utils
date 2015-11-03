@@ -15,18 +15,28 @@ from scipy.spatial.distance import squareform
 import math
 from sklearn.decomposition import PCA
 
+
+try:
+    argv[1]
+    argv[2]
+    argv[3]
+except:
+    print 'Usage:'
+    print '    python nmds.py <input_filename> <dissimilarity_measure> <output_filename>'
+    exit(1)
+
 # load data
 df = pd.read_table(argv[1], header=0, skiprows=[1, 2, 3, 4], index_col=0)
 # df = pd.read_table(argv[1], header=0, index_col=0) # test.txt
-print df
+# print df
 df = df.transpose()
-print df
+# print df
 df = df.as_matrix() # convert pandas.DataFrame to numpy.ndarray
 
 # center the data
 df -= df.mean()
 
-output_filename = ''
+output_filename = argv[3]+'_'
 
 # compute distances
 if argv[2] in 'euclidean':
@@ -38,15 +48,15 @@ elif argv[2] in 'braycurtis':
 elif argv[2] in 'lbraycurtis':
     output_filename += 'lbraycurtis'
     ranked = np.matrix([[(math.log(1.0+l) if l > 0.0 else 0.0) for l in np.nditer(d)] for d in df])
-    print ranked
+    # print ranked
     similarities = squareform(spd.pdist(ranked, "braycurtis"), checks=True)
 elif argv[2] in 'sbraycurtis':
     output_filename += 'sbraycurtis'
     ranked = np.matrix([[(math.sqrt(l) if l > 0.0 else 0.0) for l in np.nditer(d)] for d in df])
-    print ranked
+    # print ranked
     similarities = squareform(spd.pdist(ranked, "braycurtis"), checks=True)
 
-print similarities
+# print similarities
 
 # metadata
 y = np.array([0, 0, 0, 0, 0, 0, 0, 0, # fei
@@ -85,7 +95,7 @@ for col, lbl, idx in zip(['r', 'g', 'b'], ['fei', 'fem', 'mim'], [0, 1, 2]):
 plt.legend()
 plt.title('MDS')
 
-fig.savefig('temp/py_mds_'+output_filename+'.png', dpi=300)
+fig.savefig('temp/mds_'+output_filename+'.svg', dpi=300)
 
 # draw NMDS
 fig = plt.figure()
@@ -97,4 +107,4 @@ for col, lbl, idx in zip(['r', 'g', 'b'], ['fei', 'fem', 'mim'], [0, 1, 2]):
 plt.legend()
 plt.title('NMDS')
 
-fig.savefig('temp/py_nmds_'+output_filename+'.png', dpi=300)
+fig.savefig('temp/nmds_'+output_filename+'.svg', dpi=300)
