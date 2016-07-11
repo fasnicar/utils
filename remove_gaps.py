@@ -9,6 +9,7 @@ from Bio.Alphabet import IUPAC
 
 
 faas = iglob('*.faa')
+# faas = iglob('*.aln')
 
 for faa in faas:
     print faa
@@ -17,7 +18,12 @@ for faa in faas:
 
     with open(faa, 'rU') as f:
         for record in SeqIO.parse(f, "fasta"):
-            lst.append(SeqRecord(Seq(record.seq.tostring().replace('-', ''), IUPAC.protein), id=record.id, name=record.name, description=record.description))
+            idd = [record.id.split('_')[0]]
+            idd += [faa[:faa.rfind('.')]]
+            idd += record.id.split('_')[1:]
+            idd = '_'.join(idd)
 
-    with open(faa[:faa.find('.')]+'_nogaps.faa', 'w') as f:
+            lst.append(SeqRecord(Seq(record.seq.tostring().replace('-', ''), IUPAC.protein), id=idd, name=record.name, description=record.description))
+
+    with open(faa[:faa.find('.')].replace('_', '')+'_nogaps.faa', 'w') as f:
         SeqIO.write(lst, f, 'fasta')
