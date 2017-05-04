@@ -1,17 +1,23 @@
 #!/usr/bin/env python3
 
 
+import os
 import glob
 
 
-files = glob.iglob('CA_*/*.indel.vcf')
+# files = glob.iglob('CA_*/*.indel.vcf')
+files = glob.iglob('CA_*/[B|G]*.indel.vcf')
 
-for file in files:
-    print(file)
-    out_file = file[:file.find('.')]+'.snprate'
+for fil in files:
+    out_file = fil[:fil.find('.')]+'.snprate'
     data = {}
 
-    with open(file) as f:
+    #if os.path.isfile(out_file):
+    #    continue
+
+    print(fil)
+
+    with open(fil) as f:
         for row in f:
             if not row.startswith('#'):
                 rows = row.strip().split('\t')
