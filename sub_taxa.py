@@ -30,5 +30,8 @@ with open(taxa, 'r') as f:
         taxad[gid] = taf
 
 for gid, taf in taxad.iteritems():
-    call(['sed', '-i', 's/'+gid+'/'+taf+sep+gid+'/g', tree])
+    call(['sed', '-i', 's/('+gid+':/('+taf+sep+gid+':/g', tree])
+    call(['sed', '-i', 's/('+gid+',/('+taf+sep+gid+',/g', tree])
+    call(['sed', '-i', 's/,'+gid+',/,'+taf+sep+gid+',/g', tree])
+    call(['sed', '-i', 's/,'+gid+':/,'+taf+sep+gid+':/g', tree])
     # print(' '.join(['sed', '-i', '"s/'+gid+'/'+gid+'_'+taf+'/g"', tree]))

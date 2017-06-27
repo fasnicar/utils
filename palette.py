@@ -5,6 +5,7 @@ import colorsys
 import random
 import matplotlib
 matplotlib.use('Agg')
+from matplotlib import pyplot as plt
 import seaborn as sns
 sns.set()
 
@@ -67,5 +68,5 @@ def get_palette(num_colors, my_seed=None):
 def print_palette(palette, output_filename):
     """
     """
-    plot = sns.palplot(palette)
-    plot.savefig(output_filename)
+    sns.palplot(sns.color_palette(palette))
+    plt.savefig(output_filename)
