@@ -7,7 +7,8 @@ from Bio import Phylo
 
 
 def read_params(args):
-    p = ap.ArgumentParser(description='Compute the total branch length of the provided tree')
+    p = ap.ArgumentParser(formatter_class=ap.ArgumentDefaultsHelpFormatter,
+                          description='Compute the total branch length of the provided tree')
 
     p.add_argument('intree', default=None, type=str,
                    help="the input tree, stdin if not present")

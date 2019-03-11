@@ -7,7 +7,8 @@ from Bio import Phylo
 
 
 def read_params(args):
-    p = ap.ArgumentParser(description='Remove offending chars from tree node labels')
+    p = ap.ArgumentParser(formatter_class=ap.ArgumentDefaultsHelpFormatter,
+                          description='Remove offending chars from tree node labels')
 
     p.add_argument('intree', nargs='?', default=None, type=str,
                    help="the input tree, stdin if not present")

@@ -8,13 +8,13 @@ from Bio import Phylo
 
 def read_params(args):
     p = ap.ArgumentParser(formatter_class=ap.ArgumentDefaultsHelpFormatter,
-                          description='Remove offending chars from tree node labels')
+                          description='Print to stdout the tree node labels')
 
     p.add_argument('intree', nargs='?', default=None, type=str,
                    help="the input tree, stdin if not present")
     p.add_argument('-f', default='newick', type=str,
                    choices=['newick', 'nexus', 'nexml', 'phyloxml', 'cdao'],
-                   help="inp/out -put format")
+                   help="input format")
 
     args = vars(p.parse_args())
 
@@ -27,4 +27,7 @@ def read_params(args):
 if __name__ == "__main__":
     args = read_params(sys.argv)
     tree = Phylo.read(args['intree'], args['f'])
-    Phylo.draw_ascii(tree)
+
+    for clade in tree.find_clades():
+        if clade.name:
+            sys.stdout.write(clade.name + '\n')
