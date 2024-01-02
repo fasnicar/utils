@@ -5,12 +5,11 @@ import sys
 import argparse as ap
 from Bio import Phylo
 import os
-import pyphlan as ppa
 
 
 def read_params(args):
     p = ap.ArgumentParser(formatter_class=ap.ArgumentDefaultsHelpFormatter,
-                          description='Append a label in front of the current node labels')
+                          description='Compute the partial branch length of a set of leaves')
 
     p.add_argument('intree', nargs='?', default=None, type=str,
                    help="the input tree, stdin if not present")
@@ -23,7 +22,7 @@ def read_params(args):
     args = vars(p.parse_args())
 
     if os.path.isfile(args['l']):
-        args['l'] = [r.strip() for r in open(args['l'] if r.strip()]
+        args['l'] = [r.strip() for r in open(args['l']) if r.strip()]
     else:  # the input list is given as comma-separated values
         args['l'] = args['l'].split(',')
 

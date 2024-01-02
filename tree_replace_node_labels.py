@@ -5,7 +5,8 @@ import sys
 import argparse as ap
 from Bio import Phylo
 import os
-
+import sys
+sys.setrecursionlimit(10000)
 
 def read_params(args):
     p = ap.ArgumentParser(formatter_class=ap.ArgumentDefaultsHelpFormatter,
